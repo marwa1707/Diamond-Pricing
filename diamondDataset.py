@@ -1,3 +1,4 @@
+
 import os
 import pandas as pd
 import torch
@@ -16,11 +17,13 @@ class DiamondDataset(Dataset):
     def __getitem__(self, index):
         id = str(int(self.annotations.iloc[index, 0]))
         img_path = os.path.join(self.root_dir, id, f'{id}-photo0.jpg')
-        image = io.imread(img_path)
-        y_label = torch.tensor(int(self.annotations.iloc[index, 11]))
+        if len(img_path) != 0:
+            image = io.imread(img_path)
+            y_label = torch.tensor(int(self.annotations.iloc[index, 11]))
 
-        if self.transform:
-            image = self.transform(image)
+            if self.transform:
+                image = self.transform(image)
+
 
         return (image, y_label)
 
@@ -28,3 +31,4 @@ class DiamondDataset(Dataset):
 if __name__ == "__main__":
     diamondDataset = DiamondDataset("Diamond_Pricing_Dataset.csv", "images")
     diamondDataset[0]
+
