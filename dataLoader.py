@@ -37,9 +37,7 @@ for batch in dataloader:
     features, labels = batch
     labels = labels.reshape(labels.shape[0], 1)
     predictions = model(features)
-    loss = F.mse_loss(predictions, labels).long()
-    print(loss.requires_grad)
-    print(loss.type())
+    loss = F.mse_loss(predictions, labels)
     loss.backward()
     break
     

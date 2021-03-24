@@ -36,11 +36,10 @@ class DiamondDataset(Dataset):
         id = str(int(self.annotations.iloc[index, 0]))
         img_path = os.path.join(self.root_dir, id, f'{id}-photo0.jpg')
         image = Image.open(img_path)
-        y_label = torch.tensor(int(self.annotations.iloc[index, 11]))
+        y_label = torch.tensor(int(self.annotations.iloc[index, 11])).float() # without the float, this label becomes a LongTensor and screws things up when we do .backward()
 
         if self.transform:
             image = self.transform(image)
-
 
         return (image, y_label)
 
