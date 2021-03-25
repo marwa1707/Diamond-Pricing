@@ -6,12 +6,18 @@ class Model(torch.nn.Module):
         self.convlayers = torch.nn.Sequential(
             torch.nn.Conv2d(3, 16, kernel_size=3),
             torch.nn.ReLU(),
-            torch.nn.Conv2d(16, 16, kernel_size=3),
+            torch.nn.Conv2d(16, 64, kernel_size=3),
+            torch.nn.ReLU(),
+            torch.nn.Conv2d(64, 64, kernel_size=3),
+            torch.nn.ReLU(),
+            torch.nn.Conv2d(64, 64, kernel_size=3),
             torch.nn.ReLU(),
             torch.nn.Flatten()
         )
         self.linearlayers = torch.nn.Sequential(
-            torch.nn.Linear(1016064,1)
+            torch.nn.Linear(200704,1),
+            torch.nn.ReLU()
+            
         )
     def forward(self, X):
         X = self.convlayers(X)
